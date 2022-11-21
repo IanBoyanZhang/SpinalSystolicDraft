@@ -5,18 +5,33 @@ import spinal.core._
 // Hardware definition
 case class MyTopLevel() extends Component {
   val io = new Bundle {
-    val cond0 = in  Bool()
-    val cond1 = in  Bool()
-    val flag  = out Bool()
-    val state = out UInt(8 bits)
+    val i_clk = Bool()
+    val i_rst = Bool()
   }
 
-  val counter = Reg(UInt(8 bits)) init 0
+  // Remove io_ prefix
+  noIoPrefix()
 
-  when(io.cond0) {
-    counter := counter + 1
+  // Create osc_clk clock domain
+  val coreClockDomain = ClockDomain(
+    clock  = io.i_clk,
+    reset  = io.i_rst,
+    config = ClockDomainConfig(
+      clockEdge        = RISING,
+      resetKind        = SYNC,
+      resetActiveLevel = LOW
+    ) 
+  )
+
+  // Create osc_clk clock area
+  val coreArea = new ClockingArea(coreClockDomain) {
+    val coreClockRegister = Reg(UInt(4 bits)) init(7)
+
+    // ClockingArea and registers
+    // reg := reg + 1;
+    // io.result :=
   }
 
-  io.state := counter
-  io.flag := (counter === 0) | io.cond1
 }
+
+

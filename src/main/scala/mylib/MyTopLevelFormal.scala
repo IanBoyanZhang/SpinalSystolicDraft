@@ -15,10 +15,10 @@ object MyTopLevelFormal extends App {
       assumeInitial(clockDomain.isResetActive)
 
       // Provide some stimulus
-      anyseq(dut.io.cond0)
-      anyseq(dut.io.cond1)
+      //anyseq(dut.io.cond0)
+      //anyseq(dut.io.cond1)
 
       // Check the state initial value and increment
-      assert(dut.io.state === past(dut.io.state + U(dut.io.cond0)).init(0))
+      //assert(dut.io.state === past(dut.io.state + U(dut.io.cond0)).init(0))
     })
 }
