@@ -25,9 +25,17 @@ case class MyTopLevel() extends Component {
 
   // Create osc_clk clock area
   val core = new ClockingArea(coreClockDomain) {
-    //val testReg = Reg(UInt(4 bits)) init(7)
+    // Add new generics?
+    val u_systolic_core = new SystolicCore(width = 16, dim = 4)
 
-    val u_systolic_core = new SystolicCore(width = 16, dim = 3)
+    // I guess we have to use the coreClockDomain
+
+    u_systolic_core.io.i.clk  := True
+    u_systolic_core.io.i.rst  := True
+    u_systolic_core.io.i.A    := 0
+    u_systolic_core.io.i.B    := 0
+    u_systolic_core.io.i.en   := True
+    u_systolic_core.io.i.mode := True
   }
 
 }
